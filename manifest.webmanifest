@@ -2,7 +2,7 @@
   "id": "./",
   "name": "The Floyd Show HQ",
   "short_name": "The Floyd Show",
-  "description": "The production band app for bookings, rehearsals, availability and polls.",
+  "description": "The Floyd Show HQ V21 \u2014 bookings, rehearsals, availability and band planning.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

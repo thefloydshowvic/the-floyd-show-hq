@@ -13,9 +13,10 @@
   <title>The Floyd Show</title>
 
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" sizes="192x192" href="./icons/icon-192.png">
-  <link rel="icon" sizes="512x512" href="./icons/icon-512.png">
-  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png?v=21">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png?v=21">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png?v=21">
+  <link rel="preload" as="image" href="./icons/icon-192.png?v=21">
 
   <style>
     :root {
@@ -79,11 +80,31 @@
       text-align: center;
     }
 
-    .logo {
+    .logo-shell {
       width: 150px;
       height: 150px;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
       border-radius: 32px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(74,169,255,.28), transparent 45%),
+        #07131f;
+      box-shadow: 0 0 34px rgba(187,85,255,.18);
+    }
+
+    .logo {
+      width: 100%;
+      height: 100%;
+      display: block;
       object-fit: cover;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    .logo.loaded {
+      opacity: 1;
     }
 
     h1 {
@@ -131,6 +152,16 @@
       cursor: pointer;
     }
 
+    .loader {
+      width: 44px;
+      height: 44px;
+      margin: 24px auto 0;
+      border: 4px solid rgba(255,255,255,.12);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
     .update-banner {
       position: fixed;
       z-index: 60;
@@ -148,7 +179,9 @@
       background: rgba(10,27,42,.98);
       box-shadow: 0 16px 48px rgba(0,0,0,.44);
     }
+
     .update-banner[hidden] { display: none; }
+
     .update-banner button {
       width: auto;
       min-height: 42px;
@@ -156,25 +189,49 @@
       padding: 8px 14px;
       font-size: 15px;
     }
-    .loader {
-      width: 44px;
-      height: 44px;
-      margin: 24px auto 0;
-      border: 4px solid rgba(255,255,255,.12);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-    }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    #loadingScreen .logo-shell {
+      animation: logoArrival 1s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    #loadingScreen .card {
+      animation: cardArrival .8s ease both;
+    }
+
+    @keyframes logoArrival {
+      0% {
+        opacity: 0;
+        transform: scale(.78);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes cardArrival {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
   <div id="memberScreen" class="screen" hidden>
     <section class="card">
-      <img class="logo" src="./icons/icon-192.png" alt="The Floyd Show logo">
+      <div class="logo-shell">
+        <img class="logo app-logo" src="./icons/icon-192.png?v=21"
+          alt="The Floyd Show logo">
+      </div>
       <h1>Who is using The Floyd Show HQ?</h1>
       <p>Choose your name once. This device will remember you.</p>
 
@@ -200,7 +257,10 @@
 
   <div id="loadingScreen" class="screen">
     <section class="card">
-      <img class="logo" src="./icons/icon-192.png" alt="The Floyd Show logo">
+      <div class="logo-shell">
+        <img class="logo app-logo" src="./icons/icon-192.png?v=21"
+          alt="The Floyd Show logo">
+      </div>
       <h1>The Floyd Show HQ</h1>
       <p>Loading bookings, rehearsals and availability…</p>
       <div class="loader"></div>
@@ -211,9 +271,10 @@
     <span>A new Floyd HQ update is ready.</span>
     <button id="reloadUpdateButton" type="button">Update now</button>
   </div>
+
   <iframe id="appFrame" title="The Floyd Show HQ"></iframe>
 
-  <script src="./config.js"></script>
+  <script src="./config.js?v=21"></script>
   <script>
     (function () {
       'use strict';
@@ -224,6 +285,18 @@
       const memberSelect = document.getElementById('memberSelect');
       const continueButton = document.getElementById('continueButton');
       const appFrame = document.getElementById('appFrame');
+
+      document.querySelectorAll('.app-logo').forEach(function(image) {
+        function markLoaded() {
+          image.classList.add('loaded');
+        }
+
+        if (image.complete && image.naturalWidth > 0) {
+          markLoaded();
+        } else {
+          image.addEventListener('load', markLoaded, { once: true });
+        }
+      });
 
       function buildAppUrl(member) {
         const base = window.THE_FLOYD_SHOW_CONFIG.appsScriptUrl;
@@ -271,30 +344,43 @@
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('./sw.js').then(function(registration) {
+          navigator.serviceWorker.register('./sw.js?v=21').then(function(registration) {
             function showUpdate(worker) {
               const banner = document.getElementById('updateBanner');
               const reloadButton = document.getElementById('reloadUpdateButton');
               if (!banner || !reloadButton || !worker) return;
+
               banner.hidden = false;
               reloadButton.onclick = function() {
                 worker.postMessage({ type: 'SKIP_WAITING' });
               };
             }
-            if (registration.waiting) showUpdate(registration.waiting);
+
+            if (registration.waiting) {
+              showUpdate(registration.waiting);
+            }
+
             registration.addEventListener('updatefound', function() {
               const worker = registration.installing;
               if (!worker) return;
+
               worker.addEventListener('statechange', function() {
-                if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (
+                  worker.state === 'installed' &&
+                  navigator.serviceWorker.controller
+                ) {
                   showUpdate(worker);
                 }
               });
             });
           });
-          navigator.serviceWorker.addEventListener('controllerchange', function() {
-            window.location.reload();
-          });
+
+          navigator.serviceWorker.addEventListener(
+            'controllerchange',
+            function() {
+              window.location.reload();
+            }
+          );
         });
       }
     }());

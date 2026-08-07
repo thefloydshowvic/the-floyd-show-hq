@@ -1,3 +1,3 @@
 window.THE_FLOYD_SHOW_CONFIG = {
-  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbx5zmWffvj7cUxIMx35aAihJ_gNoWfd5XZ-7xEqUqkQm_XGOPVqENt08LizY7vb4UBkuA/exec'
+  appsScriptUrl: 'PASTE_YOUR_CURRENT_APPS_SCRIPT_EXEC_URL_HERE'
 };
