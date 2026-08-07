@@ -13,10 +13,13 @@
   <title>The Floyd Show</title>
 
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png?v=21">
-  <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png?v=21">
-  <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png?v=21">
-  <link rel="preload" as="image" href="./icons/icon-192.png?v=21">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png?v=22">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png?v=22">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png?v=22">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png?v=22">
+  <link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16.png?v=22">
+  <link rel="shortcut icon" href="./icons/favicon.ico?v=22">
+  <link rel="preload" as="image" href="./icons/icon-192.png?v=22">
 
   <style>
     :root {
@@ -229,7 +232,7 @@
   <div id="memberScreen" class="screen" hidden>
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icons/icon-192.png?v=21"
+        <img class="logo app-logo" src="./icons/icon-192.png?v=22"
           alt="The Floyd Show logo">
       </div>
       <h1>Who is using The Floyd Show HQ?</h1>
@@ -258,7 +261,7 @@
   <div id="loadingScreen" class="screen">
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icons/icon-192.png?v=21"
+        <img class="logo app-logo" src="./icons/icon-192.png?v=22"
           alt="The Floyd Show logo">
       </div>
       <h1>The Floyd Show HQ</h1>
@@ -274,7 +277,7 @@
 
   <iframe id="appFrame" title="The Floyd Show HQ"></iframe>
 
-  <script src="./config.js?v=21"></script>
+  <script src="./config.js?v=22"></script>
   <script>
     (function () {
       'use strict';
@@ -344,7 +347,7 @@
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('./sw.js?v=21').then(function(registration) {
+          navigator.serviceWorker.register('./sw.js?v=22').then(function(registration) {
             function showUpdate(worker) {
               const banner = document.getElementById('updateBanner');
               const reloadButton = document.getElementById('reloadUpdateButton');

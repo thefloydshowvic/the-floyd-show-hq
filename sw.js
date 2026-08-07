@@ -1,13 +1,16 @@
-const CACHE = 'the-floyd-show-hq-v21';
+const CACHE = 'the-floyd-show-hq-v22';
 
 const SHELL = [
   './',
   './index.html',
-  './config.js?v=21',
+  './config.js?v=22',
   './manifest.webmanifest',
-  './icons/icon-192.png?v=21',
-  './icons/icon-512.png?v=21',
-  './icons/apple-touch-icon.png?v=21'
+  './icons/icon-192.png?v=22',
+  './icons/icon-512.png?v=22',
+  './icons/apple-touch-icon.png?v=22',
+  './icons/favicon-32.png?v=22',
+  './icons/favicon-16.png?v=22',
+  './icons/favicon.ico?v=22'
 ];
 
 self.addEventListener('install', event => {
