@@ -5,12 +5,12 @@ const SHELL = [
   './index.html',
   './config.js?v=22',
   './manifest.webmanifest',
-  './icons/icon-192.png?v=22',
-  './icons/icon-512.png?v=22',
-  './icons/apple-touch-icon.png?v=22',
-  './icons/favicon-32.png?v=22',
-  './icons/favicon-16.png?v=22',
-  './icons/favicon.ico?v=22'
+  './icon-192.png?v=22',
+  './icon-512.png?v=22',
+  './apple-touch-icon.png?v=22',
+  './favicon-32.png?v=22',
+  './favicon-16.png?v=22',
+  './favicon.ico?v=22'
 ];
 
 self.addEventListener('install', event => {
