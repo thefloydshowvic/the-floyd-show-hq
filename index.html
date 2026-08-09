@@ -13,13 +13,13 @@
   <title>The Floyd Show</title>
 
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22.2.2">
-  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22.2.2">
-  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22.2.2">
-  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22.2.2">
-  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22.2.2">
-  <link rel="shortcut icon" href="./icon-192.png?v=22.2.2">
-  <link rel="preload" as="image" href="./icon-192.png?v=22.2.2">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22.3.2">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22.3.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22.3.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22.3.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22.3.2">
+  <link rel="shortcut icon" href="./icon-192.png?v=22.3.2">
+  <link rel="preload" as="image" href="./icon-192.png?v=22.3.2">
 
   <style>
     :root {
@@ -56,6 +56,14 @@
       height: 100%;
       border: 0;
       background: var(--bg);
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .18s ease;
+    }
+
+    #appFrame.ready {
+      visibility: visible;
+      opacity: 1;
     }
 
     .screen {
@@ -331,7 +339,7 @@
   <div id="memberScreen" class="screen" hidden>
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22.2.2"
+        <img class="logo app-logo" src="./icon-192.png?v=22.3.2"
           alt="The Floyd Show logo">
       </div>
       <h1>Who is using The Floyd Show HQ?</h1>
@@ -360,7 +368,7 @@
   <div id="loadingScreen" class="screen">
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22.2.2"
+        <img class="logo app-logo" src="./icon-192.png?v=22.3.2"
           alt="The Floyd Show logo">
       </div>
       <h1>The Floyd Show HQ</h1>
@@ -402,7 +410,7 @@
 
   <iframe id="appFrame" title="The Floyd Show HQ"></iframe>
 
-  <script src="./config.js?v=22.2.2"></script>
+  <script src="./config.js?v=22.3.2"></script>
   <script>
     (function () {
       'use strict';
@@ -486,6 +494,7 @@
         rememberMember(member);
         memberScreen.hidden = true;
         loadingScreen.hidden = false;
+        appFrame.classList.remove('ready');
         appFrame.src = buildAppUrl(member);
       }
 
@@ -505,9 +514,16 @@
       });
 
       appFrame.addEventListener('load', function () {
+        // Google Apps Script can briefly paint a white document during
+        // redirect/initialisation. Keep the Floyd HQ splash covering the
+        // iframe until that transition has finished.
         window.setTimeout(function () {
-          loadingScreen.hidden = true;
-        }, 300);
+          appFrame.classList.add('ready');
+
+          window.setTimeout(function () {
+            loadingScreen.hidden = true;
+          }, 180);
+        }, 1100);
       });
 
       window.addEventListener('message', function (event) {
@@ -616,7 +632,7 @@
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('./sw.js?v=22.2.2').then(function(registration) {
+          navigator.serviceWorker.register('./sw.js?v=22.3.2').then(function(registration) {
             function showUpdate(worker) {
               const banner = document.getElementById('updateBanner');
               const reloadButton = document.getElementById('reloadUpdateButton');
