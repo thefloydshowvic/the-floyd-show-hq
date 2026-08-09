@@ -13,13 +13,13 @@
   <title>The Floyd Show</title>
 
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22">
-  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22">
-  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22">
-  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22">
-  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22">
-  <link rel="shortcut icon" href="./icon-192.png?v=22">
-  <link rel="preload" as="image" href="./icon-192.png?v=22">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22.1">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22.1">
+  <link rel="shortcut icon" href="./icon-192.png?v=22.1">
+  <link rel="preload" as="image" href="./icon-192.png?v=22.1">
 
   <style>
     :root {
@@ -232,7 +232,7 @@
   <div id="memberScreen" class="screen" hidden>
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22"
+        <img class="logo app-logo" src="./icon-192.png?v=22.1"
           alt="The Floyd Show logo">
       </div>
       <h1>Who is using The Floyd Show HQ?</h1>
@@ -261,7 +261,7 @@
   <div id="loadingScreen" class="screen">
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22"
+        <img class="logo app-logo" src="./icon-192.png?v=22.1"
           alt="The Floyd Show logo">
       </div>
       <h1>The Floyd Show HQ</h1>
@@ -277,7 +277,7 @@
 
   <iframe id="appFrame" title="The Floyd Show HQ"></iframe>
 
-  <script src="./config.js?v=22"></script>
+  <script src="./config.js?v=22.1"></script>
   <script>
     (function () {
       'use strict';
@@ -307,14 +307,56 @@
         return base + separator + 'member=' + encodeURIComponent(member);
       }
 
+      function rememberMember(member) {
+        if (!member) return;
+
+        // localStorage is the normal persistent store for the GitHub wrapper.
+        try {
+          localStorage.setItem(STORAGE_KEY, member);
+        } catch (error) {
+          console.warn('Could not save Floyd HQ member to localStorage.', error);
+        }
+
+        // Cookie fallback helps on devices/browser modes where localStorage
+        // can be cleared or behave differently for an installed web app.
+        try {
+          document.cookie =
+            STORAGE_KEY + '=' + encodeURIComponent(member) +
+            '; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
+        } catch (error) {
+          console.warn('Could not save Floyd HQ member cookie.', error);
+        }
+      }
+
+      function readRememberedMember() {
+        try {
+          const stored = localStorage.getItem(STORAGE_KEY);
+          if (stored) return stored;
+        } catch (error) {
+          console.warn('Could not read Floyd HQ member from localStorage.', error);
+        }
+
+        const prefix = STORAGE_KEY + '=';
+        const parts = document.cookie ? document.cookie.split(';') : [];
+
+        for (let i = 0; i < parts.length; i++) {
+          const item = parts[i].trim();
+          if (item.indexOf(prefix) === 0) {
+            return decodeURIComponent(item.substring(prefix.length));
+          }
+        }
+
+        return '';
+      }
+
       function openApp(member) {
-        localStorage.setItem(STORAGE_KEY, member);
+        rememberMember(member);
         memberScreen.hidden = true;
         loadingScreen.hidden = false;
         appFrame.src = buildAppUrl(member);
       }
 
-      const rememberedMember = localStorage.getItem(STORAGE_KEY);
+      const rememberedMember = readRememberedMember();
 
       if (rememberedMember) {
         openApp(rememberedMember);
@@ -341,13 +383,13 @@
           event.data.type === 'the-floyd-show-member' &&
           event.data.member
         ) {
-          localStorage.setItem(STORAGE_KEY, event.data.member);
+          rememberMember(event.data.member);
         }
       });
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('./sw.js?v=22').then(function(registration) {
+          navigator.serviceWorker.register('./sw.js?v=22.1').then(function(registration) {
             function showUpdate(worker) {
               const banner = document.getElementById('updateBanner');
               const reloadButton = document.getElementById('reloadUpdateButton');
