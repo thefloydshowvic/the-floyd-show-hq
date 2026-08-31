@@ -1,16 +1,16 @@
-const CACHE = 'the-floyd-show-hq-22.5.4-clean3';
+const CACHE = 'the-floyd-show-hq-v22';
 
 const SHELL = [
   './',
   './index.html',
-  './config.js?v=22.5.4-clean3',
-  './manifest.webmanifest?v=22.5.4-clean3',
-  './icon-192.png?v=22.5.4-clean3',
-  './icon-512.png?v=22.5.4-clean3',
-  './apple-touch-icon.png?v=22.5.4-clean3',
-  './favicon-32.png?v=22.5.4-clean3',
-  './favicon-16.png?v=22.5.4-clean3',
-  './favicon.ico?v=22.5.4-clean3'
+  './config.js?v=22',
+  './manifest.webmanifest',
+  './icon-192.png?v=22',
+  './icon-512.png?v=22',
+  './apple-touch-icon.png?v=22',
+  './favicon-32.png?v=22',
+  './favicon-16.png?v=22',
+  './favicon.ico?v=22'
 ];
 
 self.addEventListener('install', event => {
@@ -35,6 +35,7 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
+
   if (url.origin !== self.location.origin) return;
 
   if (event.request.mode === 'navigate') {
