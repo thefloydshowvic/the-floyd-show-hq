@@ -9,17 +9,17 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="The Floyd Show">
-  <meta name="application-name" content="The Floyd Show">
+  <meta name="application-name" content="The Floyd Show HQ">
   <title>The Floyd Show</title>
 
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22.8">
-  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22.8">
-  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22.8">
-  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22.8">
-  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22.8">
-  <link rel="shortcut icon" href="./icon-192.png?v=22.8">
-  <link rel="preload" as="image" href="./icon-192.png?v=22.8">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22.5.2">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22.5.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22.5.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22.5.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22.5.2">
+  <link rel="shortcut icon" href="./icon-192.png?v=22.5.2">
+  <link rel="preload" as="image" href="./icon-192.png?v=22.5.2">
 
   <style>
     :root {
@@ -343,56 +343,13 @@
       margin-top: 14px;
     }
 
-
-    /* iOS standalone/PWA edge-to-edge viewport fix */
-    html {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      min-height: 100dvh;
-      background: #03070d !important;
-    }
-
-    body {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      min-height: 100dvh;
-      margin: 0;
-      padding: 0;
-      background: #03070d !important;
-      overflow: hidden;
-    }
-
-    #appFrame {
-      position: fixed !important;
-      top: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      min-height: 100dvh !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      border: 0 !important;
-      background: #03070d !important;
-    }
-
-    @supports (-webkit-touch-callout: none) {
-      html, body, #appFrame, .screen {
-        min-height: -webkit-fill-available;
-      }
-    }
   </style>
 </head>
 <body>
   <div id="memberScreen" class="screen" hidden>
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22.8"
+        <img class="logo app-logo" src="./icon-192.png?v=22.5.2"
           alt="The Floyd Show logo">
       </div>
       <h1>Who is using The Floyd Show HQ?</h1>
@@ -421,7 +378,7 @@
   <div id="loadingScreen" class="screen">
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22.8"
+        <img class="logo app-logo" src="./icon-192.png?v=22.5.2"
           alt="The Floyd Show logo">
       </div>
       <h1>The Floyd Show HQ</h1>
@@ -463,7 +420,7 @@
 
   <iframe id="appFrame" title="The Floyd Show HQ"></iframe>
 
-  <script src="./config.js?v=22.5.3"></script>
+  <script src="./config.js?v=22.5.2"></script>
   <script>
     (function () {
       'use strict';
@@ -701,7 +658,7 @@
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('./sw.js?v=22.5.3').then(function(registration) {
+          navigator.serviceWorker.register('./sw.js?v=22.5.2').then(function(registration) {
             function showUpdate(worker) {
               const banner = document.getElementById('updateBanner');
               const reloadButton = document.getElementById('reloadUpdateButton');
