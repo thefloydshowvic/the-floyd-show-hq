@@ -386,26 +386,6 @@
         min-height: -webkit-fill-available;
       }
     }
-
-    /* ============================================================
-       iPHONE APPS SCRIPT HOST-CROP TEST — GitHub wrapper only
-       ------------------------------------------------------------
-       The Google Apps Script host is painting ~170px of white space
-       above Floyd HQ on iPhone Safari. This test moves ONLY the iframe
-       upward and makes it taller by the same amount.
-
-       No Apps Script, Styles.html, navigation, app scrolling, icons,
-       manifest, or data code is changed.
-       ============================================================ */
-    @supports (-webkit-touch-callout: none) {
-      #appFrame {
-        top: -170px !important;
-        bottom: auto !important;
-        height: calc(100dvh + 170px) !important;
-        min-height: calc(100dvh + 170px) !important;
-      }
-    }
-
   </style>
 </head>
 <body>
