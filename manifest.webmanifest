@@ -2,7 +2,7 @@
   "id": "./",
   "name": "The Floyd Show HQ",
   "short_name": "The Floyd Show",
-  "description": "The Floyd Show HQ V22 \u2014 bookings, rehearsals, availability and band planning.",
+  "description": "The Floyd Show HQ V22 — bookings, rehearsals, availability and band planning.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
