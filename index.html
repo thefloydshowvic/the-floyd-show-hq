@@ -386,6 +386,44 @@
         min-height: -webkit-fill-available;
       }
     }
+
+    /* ============================================================
+       iPHONE GOOGLE HOST WHITE-AREA COVER TEST
+       ------------------------------------------------------------
+       Wrapper-only cosmetic test.
+       Does NOT move the Apps Script iframe or change app scrolling.
+       It simply paints over the Google-hosted white area seen above
+       Floyd HQ in iPhone Safari.
+       ============================================================ */
+    #iosGoogleHostCover {
+      display: none;
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      #iosGoogleHostCover {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 305px;
+        display: block;
+        pointer-events: none;
+        background: #06131d;
+      }
+
+      /* Keep Floyd HQ's own splash/member screens above the cover. */
+      .screen {
+        z-index: 20;
+      }
+
+      .update-banner,
+      .install-banner,
+      .install-help {
+        z-index: 60;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -462,6 +500,8 @@
   </div>
 
   <iframe id="appFrame" title="The Floyd Show HQ"></iframe>
+  <div id="iosGoogleHostCover" aria-hidden="true"></div>
+
 
   <script src="./config.js?v=22.5.3"></script>
   <script>
