@@ -388,60 +388,21 @@
     }
 
     /* ============================================================
-       V22.5.3 iPHONE VIEWPORT TEST — wrapper only
+       iPHONE APPS SCRIPT HOST-CROP TEST — GitHub wrapper only
        ------------------------------------------------------------
-       This test changes ONLY the outer GitHub wrapper viewport.
-       It does not alter Apps Script, Floyd HQ Styles, navigation,
-       scrolling behaviour inside the app, or icon/manifest files.
+       The Google Apps Script host is painting ~170px of white space
+       above Floyd HQ on iPhone Safari. This test moves ONLY the iframe
+       upward and makes it taller by the same amount.
+
+       No Apps Script, Styles.html, navigation, app scrolling, icons,
+       manifest, or data code is changed.
        ============================================================ */
     @supports (-webkit-touch-callout: none) {
-      html,
-      body {
-        position: fixed !important;
-        inset: 0 !important;
-        width: 100vw !important;
-        height: 100svh !important;
-        min-height: 100svh !important;
-        max-height: 100svh !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important;
-        background: #03070d !important;
-        background-color: #03070d !important;
-      }
-
       #appFrame {
-        position: absolute !important;
-        inset: 0 !important;
-        display: block !important;
-        width: 100vw !important;
-        height: 100svh !important;
-        min-height: 100svh !important;
-        max-height: 100svh !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: 0 !important;
-        background: #03070d !important;
-      }
-
-      .screen {
-        position: absolute !important;
-        inset: 0 !important;
-        width: 100vw !important;
-        height: 100svh !important;
-        min-height: 100svh !important;
-        max-height: 100svh !important;
-      }
-    }
-
-    @supports (-webkit-touch-callout: none) and (height: 100dvh) {
-      html,
-      body,
-      #appFrame,
-      .screen {
-        height: 100dvh !important;
-        min-height: 100dvh !important;
-        max-height: 100dvh !important;
+        top: -170px !important;
+        bottom: auto !important;
+        height: calc(100dvh + 170px) !important;
+        min-height: calc(100dvh + 170px) !important;
       }
     }
 
