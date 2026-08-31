@@ -12,14 +12,14 @@
   <meta name="application-name" content="The Floyd Show HQ">
   <title>The Floyd Show</title>
 
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22.5.3">
-  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22.5.3">
-  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22.5.3">
-  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22.5.3">
-  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22.5.3">
-  <link rel="shortcut icon" href="./icon-192.png?v=22.5.3">
-  <link rel="preload" as="image" href="./icon-192.png?v=22.5.3">
+  <link rel="manifest" href="./manifest.webmanifest?v=22.5.4-clean1">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22.5.4-clean1">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22.5.4-clean1">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22.5.4-clean1">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22.5.4-clean1">
+  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22.5.4-clean1">
+  <link rel="shortcut icon" href="./icon-192.png?v=22.5.4-clean1">
+  <link rel="preload" as="image" href="./icon-192.png?v=22.5.4-clean1">
 
   <style>
     :root {
@@ -386,51 +386,13 @@
         min-height: -webkit-fill-available;
       }
     }
-
-    /* ============================================================
-       iPHONE GOOGLE HOST WHITE-AREA COVER TEST
-       ------------------------------------------------------------
-       Wrapper-only cosmetic test.
-       Does NOT move the Apps Script iframe or change app scrolling.
-       It simply paints over the Google-hosted white area seen above
-       Floyd HQ in iPhone Safari.
-       ============================================================ */
-    #iosGoogleHostCover {
-      display: none;
-    }
-
-    @supports (-webkit-touch-callout: none) {
-      #iosGoogleHostCover {
-        position: fixed;
-        z-index: 10;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 305px;
-        display: block;
-        pointer-events: none;
-        background: #06131d;
-      }
-
-      /* Keep Floyd HQ's own splash/member screens above the cover. */
-      .screen {
-        z-index: 20;
-      }
-
-      .update-banner,
-      .install-banner,
-      .install-help {
-        z-index: 60;
-      }
-    }
-
   </style>
 </head>
 <body>
   <div id="memberScreen" class="screen" hidden>
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22.5.3"
+        <img class="logo app-logo" src="./icon-192.png?v=22.5.4-clean1"
           alt="The Floyd Show logo">
       </div>
       <h1>Who is using The Floyd Show HQ?</h1>
@@ -459,7 +421,7 @@
   <div id="loadingScreen" class="screen">
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22.5.3"
+        <img class="logo app-logo" src="./icon-192.png?v=22.5.4-clean1"
           alt="The Floyd Show logo">
       </div>
       <h1>The Floyd Show HQ</h1>
@@ -500,10 +462,8 @@
   </div>
 
   <iframe id="appFrame" title="The Floyd Show HQ"></iframe>
-  <div id="iosGoogleHostCover" aria-hidden="true"></div>
 
-
-  <script src="./config.js?v=22.5.3"></script>
+  <script src="./config.js?v=22.5.4-clean1"></script>
   <script>
     (function () {
       'use strict';
@@ -741,7 +701,7 @@
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('./sw.js?v=22.5.3').then(function(registration) {
+          navigator.serviceWorker.register('./sw.js?v=22.5.4-clean1').then(function(registration) {
             function showUpdate(worker) {
               const banner = document.getElementById('updateBanner');
               const reloadButton = document.getElementById('reloadUpdateButton');
