@@ -12,14 +12,14 @@
   <meta name="application-name" content="The Floyd Show HQ">
   <title>The Floyd Show</title>
 
-  <link rel="manifest" href="./manifest.webmanifest?v=22.5.4-clean1">
-  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22.5.4-clean1">
-  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22.5.4-clean1">
-  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22.5.4-clean1">
-  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22.5.4-clean1">
-  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22.5.4-clean1">
-  <link rel="shortcut icon" href="./icon-192.png?v=22.5.4-clean1">
-  <link rel="preload" as="image" href="./icon-192.png?v=22.5.4-clean1">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png?v=22.5.3">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=22.5.3">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png?v=22.5.3">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icon-192.png?v=22.5.3">
+  <link rel="icon" type="image/png" sizes="16x16" href="./icon-192.png?v=22.5.3">
+  <link rel="shortcut icon" href="./icon-192.png?v=22.5.3">
+  <link rel="preload" as="image" href="./icon-192.png?v=22.5.3">
 
   <style>
     :root {
@@ -42,7 +42,6 @@
       background-color: #03070d !important;
       overscroll-behavior: none;
     }
-
 
     html, body {
       width: 100%;
@@ -343,7 +342,6 @@
       margin-top: 14px;
     }
 
-
     /* iOS standalone/PWA edge-to-edge viewport fix */
     html {
       position: fixed;
@@ -392,7 +390,7 @@
   <div id="memberScreen" class="screen" hidden>
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22.5.4-clean1"
+        <img class="logo app-logo" src="./icon-192.png?v=22.5.3"
           alt="The Floyd Show logo">
       </div>
       <h1>Who is using The Floyd Show HQ?</h1>
@@ -421,7 +419,7 @@
   <div id="loadingScreen" class="screen">
     <section class="card">
       <div class="logo-shell">
-        <img class="logo app-logo" src="./icon-192.png?v=22.5.4-clean1"
+        <img class="logo app-logo" src="./icon-192.png?v=22.5.3"
           alt="The Floyd Show logo">
       </div>
       <h1>The Floyd Show HQ</h1>
@@ -434,7 +432,6 @@
     <span>A new Floyd HQ update is ready.</span>
     <button id="reloadUpdateButton" type="button">Update now</button>
   </div>
-
 
   <aside id="androidInstallBanner" class="install-banner" hidden>
     <div class="install-banner-copy">
@@ -463,7 +460,7 @@
 
   <iframe id="appFrame" title="The Floyd Show HQ"></iframe>
 
-  <script src="./config.js?v=22.5.4-clean1"></script>
+  <script src="./config.js?v=22.5.3"></script>
   <script>
     (function () {
       'use strict';
@@ -508,15 +505,12 @@
       function rememberMember(member) {
         if (!member) return;
 
-        // localStorage is the normal persistent store for the GitHub wrapper.
         try {
           localStorage.setItem(STORAGE_KEY, member);
         } catch (error) {
           console.warn('Could not save Floyd HQ member to localStorage.', error);
         }
 
-        // Cookie fallback helps on devices/browser modes where localStorage
-        // can be cleared or behave differently for an installed web app.
         try {
           document.cookie =
             STORAGE_KEY + '=' + encodeURIComponent(member) +
@@ -554,10 +548,6 @@
 
         const appUrl = buildAppUrl(member);
 
-        // Android Chrome works correctly when Apps Script is the top-level page,
-        // but some Android devices lose tap/click handling when Apps Script is
-        // nested inside the GitHub wrapper iframe. Use the proven-working
-        // top-level Apps Script page on Android.
         if (isAndroidPhoneOrTablet()) {
           window.location.replace(appUrl);
           return;
@@ -583,9 +573,6 @@
       });
 
       appFrame.addEventListener('load', function () {
-        // Google Apps Script can briefly paint a white document during
-        // redirect/initialisation. Keep the Floyd HQ splash covering the
-        // iframe until that transition has finished.
         window.setTimeout(function () {
           appFrame.classList.add('ready');
 
@@ -604,7 +591,6 @@
           rememberMember(event.data.member);
         }
       });
-
 
       function isAndroidDevice() {
         return /Android/i.test(navigator.userAgent || '');
@@ -661,8 +647,6 @@
             return;
           }
 
-          // Chrome may decide not to emit beforeinstallprompt immediately.
-          // In that case show clear manual install instructions.
           if (androidInstallHelp) {
             androidInstallHelp.hidden = false;
           }
@@ -692,16 +676,13 @@
         });
       }
 
-      // If the browser has not fired beforeinstallprompt yet, still show the
-      // Android install banner after a short delay. Pressing Install then
-      // displays Chrome's manual instructions.
       if (isAndroidDevice() && !isStandaloneMode()) {
         window.setTimeout(showAndroidInstallBanner, 1800);
       }
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('./sw.js?v=22.5.4-clean1').then(function(registration) {
+          navigator.serviceWorker.register('./sw.js?v=22.5.3').then(function(registration) {
             function showUpdate(worker) {
               const banner = document.getElementById('updateBanner');
               const reloadButton = document.getElementById('reloadUpdateButton');
